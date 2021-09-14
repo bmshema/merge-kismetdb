@@ -23,7 +23,7 @@ Create a service file for systemd in /lib/systemd/system:
 ```
 $ sudo nano /lib/systemd/system/subversive-penguin.service
 ```
-Add the below contents. You may need to modify the ExecStart value to reflect the location of  /subversive-penguin/main/main.py directory on your machine.
+Add the below contents. You may need to modify the ExecStart value to reflect the location of  /subversive-penguin/main/main.py on your machine.
 ```
 [Unit]
 Description=Subversive Penguin Service
