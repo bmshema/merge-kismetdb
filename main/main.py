@@ -52,11 +52,11 @@ class HandlerGuy(FileSystemEventHandler):
             # Creates log file for the events in the below print statement
             log = open("logfile.txt", "a")
             sys.stdout = log
-            print(f"{time_now} -|- Merging data to masterDB.kismet - %s." % event.src_path)
+            print(f"{time_now} -|- Merging data to masterDB.db - %s." % event.src_path)
 
             for i in glob.glob("*.kismet"):
                 infiles = i
-                master_db = sqlite3.connect("../masterDB.kismet")
+                master_db = sqlite3.connect("../masterDB.db")
                 sqlite3.connect(infiles)
 
                 try:
