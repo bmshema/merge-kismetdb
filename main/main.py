@@ -49,7 +49,6 @@ class HandlerGuy(FileSystemEventHandler):
         # Take the specified action here when a file is first created.
         elif event.event_type == 'created':
             time_now = datetime.now()
-            stderr_dump = sys.stderr
             # Creates log file for the events in the below print statement
             log = open("logfile.txt", "a")
             sys.stdout = log
