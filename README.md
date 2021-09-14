@@ -5,7 +5,7 @@ This is a utility that monitors a directory on a local machine or server for inc
 - python3
 
 #### File Structure:
-![sp](https://user-images.githubusercontent.com/55662127/133311229-77738453-45b0-436f-a240-124956adbab5.png)
+![sp2](https://user-images.githubusercontent.com/55662127/133316585-18f7a3db-385d-4a56-91cb-70497495f94e.png)
 
 #### To get set up:
 ```
