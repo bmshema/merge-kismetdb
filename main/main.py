@@ -75,7 +75,7 @@ class HandlerGuy(FileSystemEventHandler):
                     except sqlite3.OperationalError:
                         pass
 
-                master_db.commit()
+                    master_db.commit()
                 master_db.execute("detach database dba")
 
                 os.system(f"mv {infile} ../temp")
