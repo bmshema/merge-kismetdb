@@ -18,26 +18,52 @@ $ pip3 install -r requirements.txt
 $ cd main
 $ python3 main.py
 ```
-<!--
-#### To run as a systemd service (recommended):
-Create a service file for systemd in /lib/systemd/system:
+
+### To run as a systemd service (recommended):
+When we run a python script as a systemd service, the program will write in file paths from the perspective of root so absolute file paths must be use. Before enabling subversive-penguin as a service, we need to change a few lines in main.py to make this work correctly.  
+  
+Open main.py:
 ```
-$ sudo nano /lib/systemd/system/subversive-penguin.service
+$ nano /subversive-penguin/main/main.py
 ```
-Add the below contents. You may need to modify the ExecStart value to reflect the location of  /subversive-penguin/main/main.py on your machine.
+Modify line 15 to reflect the path to the /subversive-penguin/main/ directory on your system:
+```
+DIRECTORY_TO_WATCH = "/home/<username>/subversive-penguin/main/"
+```
+Modify line 56 to reflect the path to /subversive-penguin/main/ and the inbound file type:
+```
+for i in glob.glob("/home/<username>/subversive-penguin/main/*.kismet")
+```
+Modify line 58 to reflect the path to the masterDB.db file on your system:
+```
+master_db = sqlite3.connect("/home/<username>/subversive-penguin/masterDB.db")
+```
+Modify line 81 to reflect the path to the temp directory on your system:
+```
+os.system(f"mv {infile} /home/<username>/subversive-penguin/temp")
+```  
+  
+Create a service file for systemd in /etc/systemd/system:
+```
+$ sudo nano /etc/systemd/system/subversive-penguin.service
+```
+Add the below text. You may need to modify the ExecStart value to reflect the location of  /subversive-penguin/main/main.py on your machine.
 ```
 [Unit]
-Description=Subversive Penguin Service
+Description=SubversivePenguinService
 After=multi-user.target
-Conflicts=getty@tty1.service
+Environment=PYTHONUNBUFFERED=1
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/yourusername/subversive-penguin/main/main.py
-StandardInput=tty-force
+ExecStart=/usr/bin/python3 /home/user/subversive-penguin/main/main.py
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=infinity
 
 [Install]
 WantedBy=multi-user.target
+
 ```
 Restart the systemctl daemon and enable subversive-penguin as a service:
 ```
@@ -50,4 +76,3 @@ To stop and/or disable subversive-penguin as a systemd service:
 $ sudo systemctl stop subversive-penguin.service
 $ sudo systemctl disable subversive-penguin.service
 ```
--->
