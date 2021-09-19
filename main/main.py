@@ -46,7 +46,6 @@ class HandlerGuy(FileSystemEventHandler):
         """
         if event.is_directory:
             return None
-        # Take the specified action here when a file is first created.
         elif event.event_type == 'created':
             time_now = datetime.now()
             # Creates log file for the events in the below print statement
@@ -55,15 +54,15 @@ class HandlerGuy(FileSystemEventHandler):
             print(f"{time_now} -|- Merging data to masterDB.db - %s." % event.src_path)
 
             for i in glob.glob("*.kismet"):
-                infiles = i
+                infile = i
                 master_db = sqlite3.connect("../masterDB.db")
-                sqlite3.connect(infiles)
+                sqlite3.connect(infile)
 
                 try:
-                    master_db.execute(f'ATTACH \"{infiles}\" as dba')
+                    master_db.execute(f'ATTACH \"{infile}\" as dba')
                 except sqlite3.DatabaseError:
-                    os.system(f'sqlite3 {infiles} ".dump" | sqlite3 {infiles}')
-                    master_db.execute(f'ATTACH \"{infiles}\" as dba')
+                    os.system(f'sqlite3 \"{infil}\" ".dump" | sqlite3 \"{infile}\"')
+                    master_db.execute(f'ATTACH \"{infile}\" as dba')
 
                 master_db.execute("BEGIN")
 
@@ -79,7 +78,7 @@ class HandlerGuy(FileSystemEventHandler):
                 master_db.commit()
                 master_db.execute("detach database dba")
 
-                os.system(f"mv {infiles} ../temp")
+                os.system(f"mv {infile} ../temp")
 
 
 if __name__ == '__main__':
