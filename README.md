@@ -18,6 +18,7 @@ $ pip3 install -r requirements.txt
 $ cd main
 $ python3 main.py
 ```
+<!--
 #### To run as a systemd service (recommended):
 Create a service file for systemd in /lib/systemd/system:
 ```
@@ -49,3 +50,4 @@ To stop and/or disable subversive-penguin as a systemd service:
 $ sudo systemctl stop subversive-penguin.service
 $ sudo systemctl disable subversive-penguin.service
 ```
+-->
