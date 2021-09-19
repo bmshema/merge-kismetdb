@@ -1,5 +1,5 @@
 # subversive-penguin
-This is a utility that monitors a directory on a local machine or server for incoming .kismet file transfers and appends all tables into one "master" SQLite database. The original .kismet files will be moved to the temp directory so you can decide whether you need them some other time. Otherwise they will just sit in there and take up storage space for you.
+This is a utility that monitors a directory on a local machine or server for incoming .kismet file transfers and appends all tables into one "master" SQLite database. The original .kismet files will be moved to the temp directory so you can decide whether you need them some other time. Otherwise they will just sit in there and take up storage space for you. File transfers should be directed to the "main" directory.
 
 #### Dependencies:
 - python3
