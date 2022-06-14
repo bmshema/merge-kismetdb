@@ -20,7 +20,7 @@ $ python3 main.py
 ```
 
 ### To run as a systemd service (recommended):
-When we run a python script as a systemd service, the program will write in file paths from the perspective of root so absolute file paths must be use. Before enabling subversive-penguin as a service, we need to change a few lines in main.py to make this work correctly.  
+When we run the python program as a systemd service, the program will write in file paths from the perspective of root so absolute file paths must be used. Before enabling subversive-penguin as a service, we need to change a few lines in main.py to reflect where we will transfer files to.
   
 Open main.py:
 ```
@@ -47,7 +47,7 @@ Create a service file for systemd in /etc/systemd/system:
 ```
 $ sudo nano /etc/systemd/system/subversive-penguin.service
 ```
-Add the below text. You may need to modify the ExecStart value to reflect the location of  /subversive-penguin/main/main.py on your machine.
+Add the below text. You will need to modify the ExecStart value to reflect the location of  /subversive-penguin/main/main.py on your machine.
 ```
 [Unit]
 Description=SubversivePenguinService
