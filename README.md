@@ -4,9 +4,6 @@ A simple utility that monitors a directory on a local machine or remote server f
 #### Dependencies:
 - python3
 
-#### File Structure:
-![sp2](https://user-images.githubusercontent.com/55662127/133316585-18f7a3db-385d-4a56-91cb-70497495f94e.png)
-
 #### To get set up:
 ```
 $ git clone https://github.com/flaccidwhale4/subversive-penguin
