@@ -6,7 +6,7 @@ A simple utility that monitors a directory on a local machine or remote server f
 
 #### To get set up:
 ```
-$ git clone https://github.com/flaccidwhale4/subversive-penguin
+$ git clone https://github.com/bmshema/merge-kismetdb
 $ cd merge-kismetdb
 $ pip3 install -r requirements.txt
 ```
@@ -17,7 +17,7 @@ $ python3 main.py
 ```
 
 ### To run as a systemd service (recommended):
-When we run the python program as a systemd service, the program will write in file paths from the perspective of root so absolute file paths must be used. Before enabling subversive-penguin as a service, we need to change a few lines in main.py to reflect where we will transfer files to.
+When we run the python program as a systemd service, the program will write in file paths from the perspective of root so absolute file paths must be used. Before enabling merge-kismetdb as a service, we need to change a few lines in main.py to reflect where we will transfer files to.
   
 Open main.py:
 ```
@@ -47,7 +47,7 @@ $ sudo nano /etc/systemd/system/merge-kismetdb.service
 Add the below text. You will need to modify the ExecStart value to reflect the location of  /merge-kismetdb/main/main.py on your machine.
 ```
 [Unit]
-Description=merge-kismetdb Service
+Description=merge-kismetdb Servicemerge-kismetdb
 After=multi-user.target
 Environment=PYTHONUNBUFFERED=1
 
@@ -62,7 +62,7 @@ TimeoutStartSec=infinity
 WantedBy=multi-user.target
 
 ```
-Restart the systemctl daemon and enable subversive-penguin as a service:
+Restart the systemctl daemon and enable merge-kismetdb as a service:
 ```
 $ sudo systemctl daemon-reload
 $ sudo systemctl enable merge-kismetdb.service
