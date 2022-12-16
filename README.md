@@ -10,7 +10,7 @@ A simple utility that monitors a directory on a local machine or remote server f
 #### To get set up:
 ```
 $ git clone https://github.com/flaccidwhale4/subversive-penguin
-$ cd subversive-penguin
+$ cd merge-kismetdb
 $ pip3 install -r requirements.txt
 ```
 #### Run:
@@ -24,39 +24,39 @@ When we run the python program as a systemd service, the program will write in f
   
 Open main.py:
 ```
-$ nano /subversive-penguin/main/main.py
+$ nano /merge-kismetdb/main/main.py
 ```
-Modify line 15 to reflect the path to the /subversive-penguin/main/ directory on your system:
+Modify line 15 to reflect the path to the /merge-kismetdb/main/ directory on your system:
 ```
-DIRECTORY_TO_WATCH = "/home/<username>/subversive-penguin/main/"
+DIRECTORY_TO_WATCH = "/home/<username>/merge-kismetdb/main/"
 ```
-Modify line 56 to reflect the path to /subversive-penguin/main/ and the inbound file type:
+Modify line 56 to reflect the path to /merge-kismetdb/main/ and the inbound file type:
 ```
-for i in glob.glob("/home/<username>/subversive-penguin/main/*.kismet")
+for i in glob.glob("/home/<username>/merge-kismetdb/main/*.kismet")
 ```
 Modify line 58 to reflect the path to the masterDB.db file on your system:
 ```
-master_db = sqlite3.connect("/home/<username>/subversive-penguin/masterDB.db")
+master_db = sqlite3.connect("/home/<username>/merge-kismetdb/masterDB.db")
 ```
 Modify line 81 to reflect the path to the temp directory on your system:
 ```
-os.system(f"mv {infile} /home/<username>/subversive-penguin/temp")
+os.system(f"mv {infile} /home/<username>/merge-kismetdb/temp")
 ```  
   
 Create a service file for systemd in /etc/systemd/system:
 ```
-$ sudo nano /etc/systemd/system/subversive-penguin.service
+$ sudo nano /etc/systemd/system/merge-kismetdb.service
 ```
-Add the below text. You will need to modify the ExecStart value to reflect the location of  /subversive-penguin/main/main.py on your machine.
+Add the below text. You will need to modify the ExecStart value to reflect the location of  /merge-kismetdb/main/main.py on your machine.
 ```
 [Unit]
-Description=SubversivePenguinService
+Description=merge-kismetdb Service
 After=multi-user.target
 Environment=PYTHONUNBUFFERED=1
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/user/subversive-penguin/main/main.py
+ExecStart=/usr/bin/python3 /home/user/merge-kismetdb/main/main.py
 Restart=on-failure
 RestartSec=5
 TimeoutStartSec=infinity
@@ -68,11 +68,11 @@ WantedBy=multi-user.target
 Restart the systemctl daemon and enable subversive-penguin as a service:
 ```
 $ sudo systemctl daemon-reload
-$ sudo systemctl enable subversive-penguin.service
-$ sudo systemctl start subversive-penguin.service
+$ sudo systemctl enable merge-kismetdb.service
+$ sudo systemctl start merge-kismetdb.service
 ```
-To stop and/or disable subversive-penguin as a systemd service:
+To stop and/or disable merge-kismetdb as a systemd service:
 ```
-$ sudo systemctl stop subversive-penguin.service
-$ sudo systemctl disable subversive-penguin.service
+$ sudo systemctl stop merge-kismetdb.service
+$ sudo systemctl disable merge-kismetdb.service
 ```
