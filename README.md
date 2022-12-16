@@ -6,7 +6,7 @@ A simple utility that monitors a directory on a local machine or remote server f
 
 #### To get set up:
 ```
-$ git clone https://github.com/bmshema/merge-kismetdb
+$ git clone https://github.com/bmshema/merge-kismetdb.git
 $ cd merge-kismetdb
 $ pip3 install -r requirements.txt
 ```
