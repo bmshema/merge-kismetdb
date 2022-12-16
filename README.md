@@ -47,13 +47,13 @@ $ sudo nano /etc/systemd/system/merge-kismetdb.service
 Add the below text. You will need to modify the ExecStart value to reflect the location of  /merge-kismetdb/main/main.py on your machine.
 ```
 [Unit]
-Description=merge-kismetdb Servicemerge-kismetdb
+Description=merge-kismetdb Service
 After=multi-user.target
 Environment=PYTHONUNBUFFERED=1
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/user/merge-kismetdb/main/main.py
+ExecStart=/usr/bin/python3 /path-to/merge-kismetdb/main/main.py
 Restart=on-failure
 RestartSec=5
 TimeoutStartSec=infinity
