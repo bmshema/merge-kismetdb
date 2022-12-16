@@ -76,6 +76,3 @@ To stop and/or disable subversive-penguin as a systemd service:
 $ sudo systemctl stop subversive-penguin.service
 $ sudo systemctl disable subversive-penguin.service
 ```
-
-Cheers to the author of this article for a swell watchdog usage example:
-https://www.geeksforgeeks.org/create-a-watchdog-in-python-to-look-for-filesystem-changes/
