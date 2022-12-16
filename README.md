@@ -1,4 +1,4 @@
-# subversive-penguin
+# merge-kismetdb
 A simple utility that monitors a directory on a local machine or remote server for incoming .kismet file transfers and appends all tables into one "master" Kismet SQLite3 database. The original .kismet files will be moved to the temp directory so you can decide whether you need them some other time. Otherwise they will just sit in there and take up storage space for you. File transfers should be directed to the "main" directory in the file structure.
 
 #### Dependencies:
