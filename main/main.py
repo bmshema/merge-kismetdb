@@ -61,7 +61,7 @@ class HandlerGuy(FileSystemEventHandler):
                 try:
                     master_db.execute(f'ATTACH \"{infile}\" as dba')
                 except sqlite3.DatabaseError:
-                    os.system(f'sqlite3 \"{infil}\" ".dump" | sqlite3 \"{infile}\"')
+                    os.system(f'sqlite3 \"{infile}\" ".dump" | sqlite3 \"{infile}\"')
                     master_db.execute(f'ATTACH \"{infile}\" as dba')
 
                 master_db.execute("BEGIN")
