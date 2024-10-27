@@ -37,48 +37,57 @@ class HandlerGuy(FileSystemEventHandler):
     event is observed by class FireWatch.
     """
     @staticmethod
-    def on_any_event(event, **kwargs):
-        """
-        For any .kismet file moved to DIRECTORY_TO_WATCH
-        merges all tables to masterDB.kismet database and
-        archives the original files in ../temp.
-
-        """
+    def on_any_event(event):
         if event.is_directory:
             return None
         elif event.event_type == 'created':
             time_now = datetime.now()
-            # Creates log file for the events in the below print statement
-            log = open("logfile.txt", "a")
-            sys.stdout = log
-            print(f"{time_now} -|- Merging data to masterDB.db - %s." % event.src_path)
+            log_message = f"{time_now} -|- Merging data to masterDB.db - {event.src_path}"
+            
+            # Log to file
+            with open("logfile.txt", "a") as log_file:
+                log_file.write(log_message + "\n")
+            
+            # Print to stdout
+            print(log_message)
 
-            for i in glob.glob("*.kismet"):
-                infile = i
-                master_db = sqlite3.connect("../masterDB.db")
-                sqlite3.connect(infile)
+            for infile in glob.glob("*.kismet"):
+                HandlerGuy.process_kismet_file(infile)
 
-                try:
-                    master_db.execute(f'ATTACH \"{infile}\" as dba')
-                except sqlite3.DatabaseError:
-                    os.system(f'sqlite3 \"{infile}\" ".dump" | sqlite3 \"{infile}\"')
-                    master_db.execute(f'ATTACH \"{infile}\" as dba')
+    @staticmethod
+    def process_kismet_file(infile):
+        max_retries = 5
+        retry_delay = 1
 
-                master_db.execute("BEGIN")
+        for attempt in range(max_retries):
+            try:
+                with sqlite3.connect("../masterDB.db", timeout=10) as master_db:
+                    master_db.execute("PRAGMA journal_mode=WAL;")
+                    master_db.execute(f'ATTACH DATABASE "{infile}" AS dba')
 
-                for row in master_db.execute("SELECT * FROM dba.sqlite_master WHERE type='table'"):
-                    combine = "INSERT INTO " + row[1] + " SELECT * FROM dba." + row[1]
-                    print(combine)
+                    master_db.execute("BEGIN")
 
-                    try:
+                    for row in master_db.execute("SELECT * FROM dba.sqlite_master WHERE type='table'"):
+                        combine = f"INSERT OR IGNORE INTO {row[1]} SELECT * FROM dba.{row[1]}"
+                        print(combine)
                         master_db.execute(combine)
-                    except sqlite3.OperationalError:
-                        pass
 
                     master_db.commit()
-                master_db.execute("detach database dba")
+                    master_db.execute("DETACH DATABASE dba")
 
-                os.system(f"mv {infile} ../temp")
+                # If we get here without an exception, break the retry loop
+                break
+
+            except sqlite3.OperationalError as e:
+                if "database is locked" in str(e) and attempt < max_retries - 1:
+                    print(f"Database locked, retrying in {retry_delay} seconds...")
+                    time.sleep(retry_delay)
+                else:
+                    print(f"Error processing file {infile}: {e}")
+                    raise
+
+        # Move the processed file
+        os.rename(infile, os.path.join("../temp", os.path.basename(infile)))
 
 
 if __name__ == '__main__':
