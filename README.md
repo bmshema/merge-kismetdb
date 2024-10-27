@@ -17,7 +17,9 @@ $ python3 main.py
 ```
 
 ### To run as a systemd service (recommended):
-When we run the python program as a systemd service, the program will write in file paths from the perspective of root so absolute file paths must be used. Before enabling merge-kismetdb as a service, we need to change a few lines in main.py to reflect where we will transfer files to.
+If running as a service, absolute file paths must be used below. Before enabling merge-kismetdb as a service, you'll need to change a few lines in main.py to reflect where files will be tranferred to on your system. 
+
+(This will work out of the project directory without any changes.)
   
 Open main.py:
 ```
